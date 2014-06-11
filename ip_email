@@ -1,0 +1,26 @@
+#!/bin/bash
+
+cur_ip="$( /root/get_ext_ip.sh )"
+old_ip="$( cat /root/ip.txt )"
+
+EMAIL='To: ggrasso@blueyonder.co.uk
+Subject: IP Address Change
+
+Your external ip address has changed, or maybe ip.txt has gotten deleted some how. Either way, your current ip address is:
+
+
+'$cur_ip'
+
+Your no-ip account should update in no more than 30 minutes.
+
+Best regards from your Raspberry Pi'
+
+date
+echo "Your old ip address was: "$old_ip
+echo "Your current ip address is: "$cur_ip
+
+if [ $cur_ip != $old_ip ]; then
+	echo "$EMAIL" | sendmail -t && echo "Email successfully sent"; echo $cur_ip > /root/ip.txt
+else
+	echo "Nothing has changed"
+fi

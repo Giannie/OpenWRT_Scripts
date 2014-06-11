@@ -1,0 +1,20 @@
+Need luci obviously
+
+Crontab:
+
+0,30 * * * * /root/ip_email > /root/ip.log
+@reboot /root/ip_email > /root/ip.log
+
+Packages needed:
+
+kmod-usb-storage kmod_fs_ext4 block-mount
+
+/etc/config/fstab
+
+config mount 
+    option target /overlay 
+    option device /dev/sda1 
+    option fstype ext3 
+    option options rw,sync 
+    option enabled 1 
+    option enabled_fsck 0
